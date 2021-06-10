@@ -10,3 +10,9 @@ get_data:
 	wget https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip
 	unzip dogImages.zip
 	cd ..
+
+setup_env:
+	conda create -n dog-breed-classifier-env
+	conda activate dog-breed-classifier-env
+	conda install pytorch torchvision torchaudio cpuonly -c pytorch
+	conda install pandas
