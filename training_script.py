@@ -27,9 +27,9 @@ if not os.path.exists(os.path.join(model_dir, f'{dt}')):
 logger.info(f'saving models to folder {os.path.join(model_dir, f"{dt}")}')
 
 
-learning_rate = 1e-3
+learning_rate = 1e-2
 batch_size = 128
-epochs = 100
+epochs = 50
 input_size = 32
 limit_classes = True
 optimizer_class = torch.optim.Adam
@@ -43,7 +43,8 @@ logger.info(f'optimizer is {optimizer_class}')
 
 transforms = dogBreedTransforms(resize_size=input_size)
 
-logger.info(f'image transforms in use\n {transforms.img_transform}')
+logger.info(f'image transforms for training\n {transforms.img_transform}')
+logger.info(f'image transforms for testing\n {transforms.img_transform_test}')
 
 training_data = dogBreedDataset('data/dogImages/train',
                                 img_transform=transforms.img_transform,
@@ -52,7 +53,7 @@ train_dataloader = DataLoader(training_data, batch_size=batch_size,
                                 shuffle=True)
 
 validation_data = dogBreedDataset('data/dogImages/valid',
-                                  img_transform=transforms.img_transform,
+                                  img_transform=transforms.img_transform_test,
                                   limit_classes=limit_classes)
 validation_dataloader = DataLoader(validation_data, batch_size=len(validation_data),
                                     shuffle=False)
@@ -78,7 +79,7 @@ def train_loop(dataloader, model, loss_fn, optimizer):
         optimizer.zero_grad()
 
         # Compute prediction and loss
-        pred = model(X)
+        pred = model(X, debug=False)
         loss = loss_fn(pred, y)
 
         # Backpropagation

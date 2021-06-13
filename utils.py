@@ -38,6 +38,11 @@ class dogBreedTransforms():
                                 transforms.Lambda(lambda x: x/255.0)
                              ])
 
+        self.img_transform_test = transforms.Compose([
+                                    transforms.Resize((resize_size, resize_size)),
+                                    transforms.Lambda(lambda x: x/255.0)
+                                  ])
+
 # dataset class
 class dogBreedDataset(Dataset):
     """we will have a map style dataset, need to define init, len and getitem
@@ -91,19 +96,21 @@ class dogBreedClassifier(nn.Module):
         super(dogBreedClassifier, self).__init__()
         self.input_size = input_size
         self.nn_stack = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3),
+            nn.Conv2d(in_channels=3, out_channels=8, kernel_size=3),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(in_channels=8, out_channels=16, kernel_size=3),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Conv2d(in_channels=16, out_channels=32, kernel_size=3),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Flatten(),
-            nn.Linear(256, 128),
+            nn.Linear(128, 64),
             nn.ReLU(),
-            nn.Linear(128, output_size)
+            nn.Linear(64, 32),
+            nn.ReLU(),
+            nn.Linear(32, output_size)
         )
 
     def forward(self, x, debug=False):
