@@ -1,6 +1,6 @@
 # use tabs for indentation when writing recipes
 
-.Phony: clean .FORCE get_data
+.Phony: clean .FORCE get_data setup_env
 
 .Force: # a dummy file to force build
 
@@ -16,3 +16,8 @@ setup_env:
 	conda activate dog-breed-classifier-env
 	conda install pytorch torchvision torchaudio cpuonly -c pytorch
 	conda install pandas
+	conda install flask
+
+run_app:
+	conda activate dog-breed-classifier-env
+	python app_server.py
