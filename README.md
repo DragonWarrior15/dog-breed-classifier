@@ -29,7 +29,7 @@
 <img src="static/images/app_img_04.png" width="70%">
 <img src="static/images/app_img_05.png" width="70%">
 
-See [commit](db3ac5c) for the app server with the from scratch model.
+See [commit](https://github.com/DragonWarrior15/dog-breed-classifier/tree/db3ac5cf5ba5cfad58638f6a867c592279fcaa8a) for the app server with the from scratch model.
 
 ## Results and comparisons
 Following table gives a comparison of the models along with a few of the parameters
