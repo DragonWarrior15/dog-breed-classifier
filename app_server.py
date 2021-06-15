@@ -15,7 +15,7 @@ input_size = 224
 output_size = 133
 transforms = dogBreedTransforms(resize_size=input_size)
 # model is picked based on the highest test set accuracy from the logs
-model = torch.load(os.path.join('models', '202106150749', '202106150749_00007'))
+model = torch.load(os.path.join('models', '202106150749', '202106150749_00008'))
 model.eval()
 # softmax
 sm = nn.Softmax(dim=1)
