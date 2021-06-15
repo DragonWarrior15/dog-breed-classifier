@@ -3,8 +3,7 @@ import logging
 
 import torch
 from torch.utils.data import Dataset
-from torchvision import datasets
-from torchvision import transforms
+from torchvision import datasets, transforms, models
 from torchvision.io import read_image
 from torch import nn
 
@@ -24,6 +23,12 @@ from torch import nn
 
 # device for training
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+feature_extract = True
+
+def set_parameter_requires_grad(model, feature_extracting=True):
+    if feature_extracting:
+        for param in model.parameters():
+            param.requires_grad = False
 
 class dogBreedTransforms():
     def __init__(self, resize_size=28):
@@ -35,12 +40,14 @@ class dogBreedTransforms():
                                 transforms.RandomHorizontalFlip(p=0.5),
                                 transforms.RandomVerticalFlip(p=0.5),
                                 transforms.Resize((resize_size, resize_size)),
-                                transforms.Lambda(lambda x: x/255.0)
+                                transforms.Normalize([0.485, 0.456, 0.406],
+                                                     [0.229, 0.224, 0.225])
                              ])
 
         self.img_transform_test = transforms.Compose([
                                     transforms.Resize((resize_size, resize_size)),
-                                    transforms.Lambda(lambda x: x/255.0)
+                                    transforms.Normalize([0.485, 0.456, 0.406],
+                                                         [0.229, 0.224, 0.225])
                                   ])
 
 # dataset class
@@ -95,30 +102,25 @@ class dogBreedClassifier(nn.Module):
     def __init__(self, input_size, output_size=2):
         super(dogBreedClassifier, self).__init__()
         self.input_size = input_size
-        self.nn_stack = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(in_channels=16, out_channels=32, kernel_size=3),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Flatten(),
-            nn.Linear(256, 128),
-            nn.ReLU(),
-            nn.Linear(128, output_size),
-        )
+
+        self.model = models.vgg11_bn(pretrained=True)
+        set_parameter_requires_grad(self.model, feature_extracting=True)
+        num_ftrs = self.model.classifier[6].in_features
+        self.model.classifier[6] = nn.Linear(num_ftrs, output_size)
+        """
+        self.model = models.squeezenet1_0(pretrained=True)
+        set_parameter_requires_grad(self.model, feature_extracting=True)
+        self.model.classifier[1] = nn.Conv2d(512, output_size, kernel_size=(1,1), stride=(1,1))
+        """
 
     def forward(self, x, debug=False):
         if(debug):
-            for layer in self.nn_stack:
+            for layer in self.model:
                 x = layer(x)
                 print(x.size())
             logits = x
         else:
-            logits = self.nn_stack(x)
+            logits = self.model(x)
         return logits
 
 def logger_setup(log_file_path):

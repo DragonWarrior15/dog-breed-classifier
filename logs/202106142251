@@ -1,0 +1,182 @@
+2021-06-14 22:51:58,173 - INFO - logging to file logs/202106142251
+2021-06-14 22:51:58,176 - INFO - saving models to folder models/202106142251
+2021-06-14 22:51:58,177 - INFO - learning rate is 0.001
+2021-06-14 22:51:58,177 - INFO - batch_size is 128
+2021-06-14 22:51:58,177 - INFO - epochs is 5
+2021-06-14 22:51:58,177 - INFO - input image size is 224
+2021-06-14 22:51:58,177 - INFO - limit_classes is set to False
+2021-06-14 22:51:58,178 - INFO - optimizer is <class 'torch.optim.adam.Adam'>
+2021-06-14 22:51:58,178 - INFO - image transforms for training
+ Compose(
+    RandomAffine(degrees=[-15.0, 15.0], translate=(0.1, 0.1), scale=(0.9, 1.1), shear=[-10.0, 10.0])
+    RandomHorizontalFlip(p=0.5)
+    RandomVerticalFlip(p=0.5)
+    Resize(size=(224, 224), interpolation=bilinear)
+    Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+)
+2021-06-14 22:51:58,199 - INFO - image transforms for testing
+ Compose(
+    Resize(size=(224, 224), interpolation=bilinear)
+    Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+)
+2021-06-14 22:51:58,984 - INFO - total classes are 133
+2021-06-14 22:51:59,022 - INFO - dogBreedClassifier(
+  (model): SqueezeNet(
+    (features): Sequential(
+      (0): Conv2d(3, 96, kernel_size=(7, 7), stride=(2, 2))
+      (1): ReLU(inplace=True)
+      (2): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=True)
+      (3): Fire(
+        (squeeze): Conv2d(96, 16, kernel_size=(1, 1), stride=(1, 1))
+        (squeeze_activation): ReLU(inplace=True)
+        (expand1x1): Conv2d(16, 64, kernel_size=(1, 1), stride=(1, 1))
+        (expand1x1_activation): ReLU(inplace=True)
+        (expand3x3): Conv2d(16, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (expand3x3_activation): ReLU(inplace=True)
+      )
+      (4): Fire(
+        (squeeze): Conv2d(128, 16, kernel_size=(1, 1), stride=(1, 1))
+        (squeeze_activation): ReLU(inplace=True)
+        (expand1x1): Conv2d(16, 64, kernel_size=(1, 1), stride=(1, 1))
+        (expand1x1_activation): ReLU(inplace=True)
+        (expand3x3): Conv2d(16, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (expand3x3_activation): ReLU(inplace=True)
+      )
+      (5): Fire(
+        (squeeze): Conv2d(128, 32, kernel_size=(1, 1), stride=(1, 1))
+        (squeeze_activation): ReLU(inplace=True)
+        (expand1x1): Conv2d(32, 128, kernel_size=(1, 1), stride=(1, 1))
+        (expand1x1_activation): ReLU(inplace=True)
+        (expand3x3): Conv2d(32, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (expand3x3_activation): ReLU(inplace=True)
+      )
+      (6): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=True)
+      (7): Fire(
+        (squeeze): Conv2d(256, 32, kernel_size=(1, 1), stride=(1, 1))
+        (squeeze_activation): ReLU(inplace=True)
+        (expand1x1): Conv2d(32, 128, kernel_size=(1, 1), stride=(1, 1))
+        (expand1x1_activation): ReLU(inplace=True)
+        (expand3x3): Conv2d(32, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (expand3x3_activation): ReLU(inplace=True)
+      )
+      (8): Fire(
+        (squeeze): Conv2d(256, 48, kernel_size=(1, 1), stride=(1, 1))
+        (squeeze_activation): ReLU(inplace=True)
+        (expand1x1): Conv2d(48, 192, kernel_size=(1, 1), stride=(1, 1))
+        (expand1x1_activation): ReLU(inplace=True)
+        (expand3x3): Conv2d(48, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (expand3x3_activation): ReLU(inplace=True)
+      )
+      (9): Fire(
+        (squeeze): Conv2d(384, 48, kernel_size=(1, 1), stride=(1, 1))
+        (squeeze_activation): ReLU(inplace=True)
+        (expand1x1): Conv2d(48, 192, kernel_size=(1, 1), stride=(1, 1))
+        (expand1x1_activation): ReLU(inplace=True)
+        (expand3x3): Conv2d(48, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (expand3x3_activation): ReLU(inplace=True)
+      )
+      (10): Fire(
+        (squeeze): Conv2d(384, 64, kernel_size=(1, 1), stride=(1, 1))
+        (squeeze_activation): ReLU(inplace=True)
+        (expand1x1): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1))
+        (expand1x1_activation): ReLU(inplace=True)
+        (expand3x3): Conv2d(64, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (expand3x3_activation): ReLU(inplace=True)
+      )
+      (11): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=True)
+      (12): Fire(
+        (squeeze): Conv2d(512, 64, kernel_size=(1, 1), stride=(1, 1))
+        (squeeze_activation): ReLU(inplace=True)
+        (expand1x1): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1))
+        (expand1x1_activation): ReLU(inplace=True)
+        (expand3x3): Conv2d(64, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (expand3x3_activation): ReLU(inplace=True)
+      )
+    )
+    (classifier): Sequential(
+      (0): Dropout(p=0.5, inplace=False)
+      (1): Conv2d(512, 133, kernel_size=(1, 1), stride=(1, 1))
+      (2): ReLU(inplace=True)
+      (3): AdaptiveAvgPool2d(output_size=(1, 1))
+    )
+  )
+)
+2021-06-14 22:51:59,023 - INFO - Params to learn:
+2021-06-14 22:51:59,024 - INFO - 	model.classifier.1.weight
+2021-06-14 22:51:59,024 - INFO - 	model.classifier.1.bias
+2021-06-14 22:51:59,025 - INFO - Epoch 1
+-------------------------------
+2021-06-14 22:52:12,690 - INFO - loss: 412.853821  [    0/ 6679]
+2021-06-14 22:53:33,233 - INFO - loss: 276.351257  [  640/ 6679]
+2021-06-14 22:54:51,749 - INFO - loss: 261.764862  [ 1280/ 6679]
+2021-06-14 22:56:03,575 - INFO - loss: 245.486862  [ 1920/ 6679]
+2021-06-14 22:57:12,519 - INFO - loss: 200.678482  [ 2560/ 6679]
+2021-06-14 22:58:28,034 - INFO - loss: 189.144608  [ 3200/ 6679]
+2021-06-14 22:59:52,409 - INFO - loss: 180.584396  [ 3840/ 6679]
+2021-06-14 23:01:06,143 - INFO - loss: 168.133392  [ 4480/ 6679]
+2021-06-14 23:02:27,205 - INFO - loss: 153.276154  [ 5120/ 6679]
+2021-06-14 23:03:40,300 - INFO - loss: 133.301163  [ 5760/ 6679]
+2021-06-14 23:04:54,630 - INFO - loss: 138.467987  [ 6400/ 6679]
+2021-06-14 23:06:05,689 - INFO - Validation Error: Accuracy: 11.0%, Avg loss: 131.235380 
+
+2021-06-14 23:06:06,278 - INFO - Epoch 2
+-------------------------------
+2021-06-14 23:06:20,708 - INFO - loss: 112.301651  [    0/ 6679]
+2021-06-14 23:07:36,016 - INFO - loss: 124.751839  [  640/ 6679]
+2021-06-14 23:08:41,688 - INFO - loss: 102.325569  [ 1280/ 6679]
+2021-06-14 23:10:08,860 - INFO - loss: 93.238007  [ 1920/ 6679]
+2021-06-14 23:11:24,458 - INFO - loss: 96.166939  [ 2560/ 6679]
+2021-06-14 23:12:52,228 - INFO - loss: 84.421959  [ 3200/ 6679]
+2021-06-14 23:14:05,821 - INFO - loss: 84.612587  [ 3840/ 6679]
+2021-06-14 23:15:16,482 - INFO - loss: 78.041397  [ 4480/ 6679]
+2021-06-14 23:16:28,919 - INFO - loss: 82.641014  [ 5120/ 6679]
+2021-06-14 23:17:35,239 - INFO - loss: 72.354889  [ 5760/ 6679]
+2021-06-14 23:18:45,554 - INFO - loss: 59.849903  [ 6400/ 6679]
+2021-06-14 23:19:51,858 - INFO - Validation Error: Accuracy: 16.0%, Avg loss: 73.203877 
+
+2021-06-14 23:19:52,314 - INFO - Epoch 3
+-------------------------------
+2021-06-14 23:20:05,797 - INFO - loss: 66.927895  [    0/ 6679]
+2021-06-14 23:21:38,376 - INFO - loss: 58.261391  [  640/ 6679]
+2021-06-14 23:23:20,939 - INFO - loss: 56.976410  [ 1280/ 6679]
+2021-06-14 23:25:06,626 - INFO - loss: 54.315079  [ 1920/ 6679]
+2021-06-14 23:26:50,162 - INFO - loss: 53.295803  [ 2560/ 6679]
+2021-06-14 23:28:21,670 - INFO - loss: 52.251755  [ 3200/ 6679]
+2021-06-14 23:29:55,596 - INFO - loss: 57.183075  [ 3840/ 6679]
+2021-06-14 23:31:20,575 - INFO - loss: 44.481731  [ 4480/ 6679]
+2021-06-14 23:32:49,377 - INFO - loss: 46.232635  [ 5120/ 6679]
+2021-06-14 23:34:29,010 - INFO - loss: 42.639610  [ 5760/ 6679]
+2021-06-14 23:36:12,487 - INFO - loss: 37.995697  [ 6400/ 6679]
+2021-06-14 23:37:43,524 - INFO - Validation Error: Accuracy: 16.2%, Avg loss: 45.039320 
+
+2021-06-14 23:37:44,113 - INFO - Epoch 4
+-------------------------------
+2021-06-14 23:38:02,652 - INFO - loss: 37.526272  [    0/ 6679]
+2021-06-14 23:39:50,327 - INFO - loss: 37.068943  [  640/ 6679]
+2021-06-14 23:41:33,869 - INFO - loss: 37.121342  [ 1280/ 6679]
+2021-06-14 23:43:22,539 - INFO - loss: 31.039812  [ 1920/ 6679]
+2021-06-14 23:45:12,750 - INFO - loss: 33.511063  [ 2560/ 6679]
+2021-06-14 23:47:09,033 - INFO - loss: 32.113533  [ 3200/ 6679]
+2021-06-14 23:48:40,676 - INFO - loss: 32.082226  [ 3840/ 6679]
+2021-06-14 23:50:21,433 - INFO - loss: 27.650299  [ 4480/ 6679]
+2021-06-14 23:51:34,859 - INFO - loss: 27.509281  [ 5120/ 6679]
+2021-06-14 23:52:46,489 - INFO - loss: 22.332951  [ 5760/ 6679]
+2021-06-14 23:54:18,975 - INFO - loss: 27.074259  [ 6400/ 6679]
+2021-06-14 23:55:34,281 - INFO - Validation Error: Accuracy: 21.7%, Avg loss: 29.755756 
+
+2021-06-14 23:55:34,418 - INFO - Epoch 5
+-------------------------------
+2021-06-14 23:55:46,877 - INFO - loss: 28.993013  [    0/ 6679]
+2021-06-14 23:57:03,436 - INFO - loss: 21.104769  [  640/ 6679]
+2021-06-14 23:58:22,611 - INFO - loss: 24.342270  [ 1280/ 6679]
+2021-06-14 23:59:29,611 - INFO - loss: 26.073086  [ 1920/ 6679]
+2021-06-15 00:00:56,057 - INFO - loss: 20.532677  [ 2560/ 6679]
+2021-06-15 00:02:03,969 - INFO - loss: 21.407412  [ 3200/ 6679]
+2021-06-15 00:03:11,762 - INFO - loss: 19.793213  [ 3840/ 6679]
+2021-06-15 00:04:15,601 - INFO - loss: 20.207312  [ 4480/ 6679]
+2021-06-15 00:05:25,622 - INFO - loss: 17.796988  [ 5120/ 6679]
+2021-06-15 00:06:25,411 - INFO - loss: 16.851255  [ 5760/ 6679]
+2021-06-15 00:07:30,620 - INFO - loss: 18.522943  [ 6400/ 6679]
+2021-06-15 00:08:33,372 - INFO - Validation Error: Accuracy: 18.1%, Avg loss: 21.499408 
+
+2021-06-15 00:08:33,794 - INFO - Done!

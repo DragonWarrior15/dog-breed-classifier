@@ -27,11 +27,11 @@ if not os.path.exists(os.path.join(model_dir, f'{dt}')):
 logger.info(f'saving models to folder {os.path.join(model_dir, f"{dt}")}')
 
 
-learning_rate = 1e-2
+learning_rate = 1e-3
 batch_size = 128
 epochs = 50
-input_size = 32
-limit_classes = True
+input_size = 224
+limit_classes = False
 optimizer_class = torch.optim.Adam
 
 logger.info(f'learning rate is {learning_rate}')
@@ -55,7 +55,7 @@ train_dataloader = DataLoader(training_data, batch_size=batch_size,
 validation_data = dogBreedDataset('data/dogImages/valid',
                                   img_transform=transforms.img_transform_test,
                                   limit_classes=limit_classes)
-validation_dataloader = DataLoader(validation_data, batch_size=len(validation_data),
+validation_dataloader = DataLoader(validation_data, batch_size=batch_size,
                                     shuffle=False)
 
 num_classes = training_data.get_total_classes()
@@ -70,7 +70,15 @@ logger.info(model)
 
 loss_fn = nn.CrossEntropyLoss()
 
-optimizer = optimizer_class(model.parameters(), lr=learning_rate)
+params_to_update = model.parameters()
+logger.info("Params to learn:")
+params_to_update = []
+for name, param in model.named_parameters():
+    if param.requires_grad == True:
+        params_to_update.append(param)
+        logger.info("\t" + name)
+
+optimizer = optimizer_class(params_to_update, lr=learning_rate)
 
 def train_loop(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
@@ -98,7 +106,7 @@ def val_loop(dataloader, model, loss_fn):
     with torch.no_grad():
         for X, y in dataloader:
             pred = model(X)
-            test_loss += loss_fn(pred, y).item()
+            test_loss += loss_fn(pred, y).item() * X.size(0)
             correct += (pred.argmax(1) == y).type(torch.float).sum().item()
 
     test_loss /= size
@@ -110,6 +118,7 @@ for t in range(epochs):
     train_loop(train_dataloader, model, loss_fn, optimizer)
     val_loop(validation_dataloader, model, loss_fn)
     # save the model
-    torch.save(model.state_dict(), os.path.join(model_dir, f'{dt}', '%05d' % t))
+    # torch.save(model.state_dict(), os.path.join(model_dir, f'{dt}', '%05d' % t))
+    torch.save(model, os.path.join(model_dir, f'{dt}', '%s_%05d' % (dt, t)))
 
 logger.info("Done!")

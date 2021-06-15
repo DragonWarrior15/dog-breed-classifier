@@ -1,5 +1,6 @@
 # python app_server.py
 import os
+import json
 from flask import Flask, request, render_template, jsonify
 
 from utils import dogBreedDataset, dogBreedTransforms, dogBreedClassifier, logger_setup
@@ -10,30 +11,17 @@ from torch import nn
 from torchvision.io import read_image
 
 # global definitions of image transforms and the model
-input_size = 32
-output_size = 10
+input_size = 224
+output_size = 133
 transforms = dogBreedTransforms(resize_size=input_size)
-model = dogBreedClassifier(input_size=input_size, output_size=output_size)
 # model is picked based on the highest test set accuracy from the logs
-model.load_state_dict(torch.load(os.path.join('models', '202106121107', '00087')))
+model = torch.load(os.path.join('models', '202106150749', '202106150749_00007'))
 model.eval()
 # softmax
 sm = nn.Softmax(dim=1)
 # class to labels mapping
-label_map = {
-    0: 'Affenpinscher',
-    1: 'Afghan_hound',
-    2: 'Airedale_terrier',
-    3: 'Akita',
-    4: 'Alaskan_malamute',
-    5: 'American_eskimo_dog',
-    6: 'American_foxhound',
-    7: 'American_staffordshire_terrier',
-    8: 'American_water_spaniel',
-    9: 'Anatolian_shepherd_dog'
-}
-for k in label_map:
-    label_map[k] = label_map[k].replace('_', ' ').title()
+with open('label_map', 'r') as f:
+    label_map = json.load(f)
 
 app = Flask(__name__)
 
@@ -76,7 +64,7 @@ def inference():
     preds = [[i, x] for i, x in enumerate(preds)]
     preds = sorted(preds, key=lambda x: x[1], reverse=True)
     preds = preds[:10]
-    preds = [[label_map[x[0]], int(100*x[1])] for x in preds]
+    preds = [[label_map[str(x[0])], int(100*x[1])] for x in preds]
 
     # convert to numpy array and return
     return jsonify({'preds': preds})

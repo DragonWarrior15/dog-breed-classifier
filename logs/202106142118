@@ -1,0 +1,114 @@
+2021-06-14 21:18:21,407 - INFO - logging to file logs/202106142118
+2021-06-14 21:18:21,409 - INFO - saving models to folder models/202106142118
+2021-06-14 21:18:21,410 - INFO - learning rate is 0.01
+2021-06-14 21:18:21,410 - INFO - batch_size is 32
+2021-06-14 21:18:21,410 - INFO - epochs is 5
+2021-06-14 21:18:21,410 - INFO - input image size is 224
+2021-06-14 21:18:21,410 - INFO - limit_classes is set to False
+2021-06-14 21:18:21,411 - INFO - optimizer is <class 'torch.optim.adam.Adam'>
+2021-06-14 21:18:21,411 - INFO - image transforms for training
+ Compose(
+    RandomAffine(degrees=[-15.0, 15.0], translate=(0.1, 0.1), scale=(0.9, 1.1), shear=[-10.0, 10.0])
+    RandomHorizontalFlip(p=0.5)
+    RandomVerticalFlip(p=0.5)
+    Resize(size=(224, 224), interpolation=bilinear)
+    Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+)
+2021-06-14 21:18:21,774 - INFO - image transforms for testing
+ Compose(
+    Resize(size=(224, 224), interpolation=bilinear)
+    Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+)
+2021-06-14 21:18:22,527 - INFO - total classes are 133
+2021-06-14 21:18:23,706 - INFO - dogBreedClassifier(
+  (model): VGG(
+    (features): Sequential(
+      (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (5): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (6): ReLU(inplace=True)
+      (7): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (8): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (9): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (10): ReLU(inplace=True)
+      (11): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (12): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (13): ReLU(inplace=True)
+      (14): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (15): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (16): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (17): ReLU(inplace=True)
+      (18): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (19): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (20): ReLU(inplace=True)
+      (21): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (22): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (23): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (24): ReLU(inplace=True)
+      (25): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (26): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (27): ReLU(inplace=True)
+      (28): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    )
+    (avgpool): AdaptiveAvgPool2d(output_size=(7, 7))
+    (classifier): Sequential(
+      (0): Linear(in_features=25088, out_features=4096, bias=True)
+      (1): ReLU(inplace=True)
+      (2): Dropout(p=0.5, inplace=False)
+      (3): Linear(in_features=4096, out_features=4096, bias=True)
+      (4): ReLU(inplace=True)
+      (5): Dropout(p=0.5, inplace=False)
+      (6): Linear(in_features=4096, out_features=133, bias=True)
+    )
+  )
+)
+2021-06-14 21:18:23,707 - INFO - Params to learn:
+2021-06-14 21:18:23,707 - INFO - 	model.classifier.6.weight
+2021-06-14 21:18:23,708 - INFO - 	model.classifier.6.bias
+2021-06-14 21:18:23,708 - INFO - Epoch 1
+-------------------------------
+2021-06-14 21:18:32,450 - INFO - loss: 4.983985  [    0/ 6679]
+2021-06-14 21:19:20,094 - INFO - loss: 7.970833  [  160/ 6679]
+2021-06-14 21:20:03,247 - INFO - loss: 6.416986  [  320/ 6679]
+2021-06-14 21:20:46,836 - INFO - loss: 5.265480  [  480/ 6679]
+2021-06-14 21:21:28,990 - INFO - loss: 5.510894  [  640/ 6679]
+2021-06-14 21:22:15,429 - INFO - loss: 7.279089  [  800/ 6679]
+2021-06-14 21:23:08,301 - INFO - loss: 7.491341  [  960/ 6679]
+2021-06-14 21:23:54,503 - INFO - loss: 8.737843  [ 1120/ 6679]
+2021-06-14 21:24:41,244 - INFO - loss: 9.518063  [ 1280/ 6679]
+2021-06-14 21:25:25,899 - INFO - loss: 5.033267  [ 1440/ 6679]
+2021-06-14 21:26:11,013 - INFO - loss: 7.016309  [ 1600/ 6679]
+2021-06-14 21:26:56,870 - INFO - loss: 6.135242  [ 1760/ 6679]
+2021-06-14 21:27:40,900 - INFO - loss: 7.647334  [ 1920/ 6679]
+2021-06-14 21:28:24,987 - INFO - loss: 5.332080  [ 2080/ 6679]
+2021-06-14 21:29:12,152 - INFO - loss: 6.059891  [ 2240/ 6679]
+2021-06-14 21:29:55,123 - INFO - loss: 6.557798  [ 2400/ 6679]
+2021-06-14 21:30:37,175 - INFO - loss: 3.669882  [ 2560/ 6679]
+2021-06-14 21:31:22,141 - INFO - loss: 6.295800  [ 2720/ 6679]
+2021-06-14 21:32:03,756 - INFO - loss: 8.555152  [ 2880/ 6679]
+2021-06-14 21:32:48,248 - INFO - loss: 7.060173  [ 3040/ 6679]
+2021-06-14 21:33:32,699 - INFO - loss: 5.512970  [ 3200/ 6679]
+2021-06-14 21:34:17,764 - INFO - loss: 5.858709  [ 3360/ 6679]
+2021-06-14 21:35:00,526 - INFO - loss: 5.804979  [ 3520/ 6679]
+2021-06-14 21:35:41,224 - INFO - loss: 7.091224  [ 3680/ 6679]
+2021-06-14 21:36:25,713 - INFO - loss: 10.826519  [ 3840/ 6679]
+2021-06-14 21:37:05,667 - INFO - loss: 6.998604  [ 4000/ 6679]
+2021-06-14 21:37:47,357 - INFO - loss: 10.714585  [ 4160/ 6679]
+2021-06-14 21:38:26,216 - INFO - loss: 8.300362  [ 4320/ 6679]
+2021-06-14 21:39:06,714 - INFO - loss: 5.031874  [ 4480/ 6679]
+2021-06-14 21:39:49,851 - INFO - loss: 5.714560  [ 4640/ 6679]
+2021-06-14 21:40:44,990 - INFO - loss: 7.145758  [ 4800/ 6679]
+2021-06-14 21:41:24,206 - INFO - loss: 5.739821  [ 4960/ 6679]
+2021-06-14 21:42:02,392 - INFO - loss: 5.097460  [ 5120/ 6679]
+2021-06-14 21:42:42,982 - INFO - loss: 7.390040  [ 5280/ 6679]
+2021-06-14 21:43:26,422 - INFO - loss: 7.827642  [ 5440/ 6679]
+2021-06-14 21:44:07,824 - INFO - loss: 6.361926  [ 5600/ 6679]
+2021-06-14 21:44:50,982 - INFO - loss: 6.066168  [ 5760/ 6679]
+2021-06-14 21:45:39,863 - INFO - loss: 7.521776  [ 5920/ 6679]
+2021-06-14 21:46:23,225 - INFO - loss: 8.522468  [ 6080/ 6679]
+2021-06-14 21:47:05,004 - INFO - loss: 7.153027  [ 6240/ 6679]
+2021-06-14 21:47:47,224 - INFO - loss: 8.569867  [ 6400/ 6679]
+2021-06-14 21:48:30,377 - INFO - loss: 4.952881  [ 6560/ 6679]
